@@ -1,0 +1,18 @@
+|------------------------------------|
+| PINGIFY: micro-sized notifications |
+|------------------------------------|
+
+A micro-sized notification daemon for linux.
+
+- Incredibly minimal
+- Depends only on xlib, libXft, and libnotify
+- Configured entirely in code
+
+=== BUILDING
+============
+
+1. Edit `config.h`
+2. Run `make`
+3. Move `pingify` to your bin directory
+
+Report bugs and improvements on the issues tab.
