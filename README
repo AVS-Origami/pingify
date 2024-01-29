@@ -2,10 +2,10 @@
 | PINGIFY: micro-sized notifications |
 |------------------------------------|
 
-A micro-sized notification daemon for linux.
+A micro-sized notifier for linux.
 
-- Incredibly minimal
-- Depends only on xlib, libXft, and libnotify
+- Incredibly minimal (only 96 lines with comments)
+- Depends only on xlib and libXft
 - Configured entirely in code
 
 === BUILDING

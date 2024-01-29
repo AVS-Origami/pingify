@@ -14,6 +14,21 @@ int main(int argc, char* argv[]) {
     // Open the display
     Display *dpy = XOpenDisplay(NIL);
     assert(dpy);
+
+    // Parse CLI args
+    int urgency = 1;
+    for (int i = 2; i < argc; i++) {
+        switch (argv[i][0]) {
+            case 't':
+                timeout = atoi(&argv[i][1]);
+                break;
+            case 'u':
+                urgency = atoi(&argv[i][1]);
+                break;
+            default:
+                break;
+        }
+    }
     
     // Get the background and border colors
     XColor bg_color;
@@ -21,7 +36,21 @@ int main(int argc, char* argv[]) {
     XAllocColor(dpy, DefaultColormap(dpy, 0), &bg_color);
 
     XColor bord_color;
-    XParseColor(dpy, DefaultColormap(dpy, 0), border_col, &bord_color);
+    switch (urgency) {
+        case 0:
+            XParseColor(dpy, DefaultColormap(dpy, 0), border_unimportant, &bord_color);
+            break;
+        case 1:
+            XParseColor(dpy, DefaultColormap(dpy, 0), border_normal, &bord_color);
+            break;
+        case 2:
+            XParseColor(dpy, DefaultColormap(dpy, 0), border_urgent, &bord_color);
+            break;
+        default:
+            XParseColor(dpy, DefaultColormap(dpy, 0), border_normal, &bord_color);
+            break;
+    }
+
     XAllocColor(dpy, DefaultColormap(dpy, 0), &bord_color);
 
     // Set window attributes
@@ -56,9 +85,7 @@ int main(int argc, char* argv[]) {
     for (;;) {
 		XEvent e;
 		XNextEvent(dpy, &e);
-		if (e.type == MapNotify) {
-				break;
-		}
+		if (e.type == MapNotify) { break; }
     }
 
     // Draw the info to the notification

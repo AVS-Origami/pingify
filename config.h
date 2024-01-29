@@ -1,6 +1,9 @@
 char bg_col[] = "#292929";
 char fg_col[] = "#AFAF8F";
-char border_col[] = "#99D9EA";
+
+char border_unimportant[] = "#CFBAFA";
+char border_normal[] = "#99D9EA";
+char border_urgent[] = "#F07178";
 
 char* font_name = "ProggySquareTTSZ:size=12";
 
