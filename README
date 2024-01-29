@@ -15,4 +15,16 @@ A micro-sized notifier for linux.
 2. Run `make`
 3. Move `pingify` to your bin directory
 
+=== USAGE
+=========
+
+pingify <message> <options>
+
+Options:
+  t<n>: set the timeout to `n` seconds
+  u<n>: set the urgency, 0 is unimportant, 1 is normal, and 2 is urgent
+
+Example:
+  `pingify "pingify :D" t3 u2`: urgent notification with 3s timeout
+
 Report bugs and improvements on the issues tab.
