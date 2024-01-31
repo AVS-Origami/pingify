@@ -4,7 +4,7 @@
 
 A micro-sized notifier for linux.
 
-- Incredibly minimal (only 96 lines with comments)
+- Incredibly minimal (only 111 lines with comments)
 - Depends only on xlib and libXft
 - Configured entirely in code
 
@@ -26,5 +26,7 @@ Options:
 
 Example:
   `pingify "pingify :D" t3 u2`: urgent notification with 3s timeout
+
+Notifications can be closed by clicking on them.
 
 Report bugs and improvements on the issues tab.

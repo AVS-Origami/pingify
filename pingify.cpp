@@ -1,14 +1,17 @@
 #include <cstring>
 #include <cstdlib>
 #include <iostream>
+#include <thread>
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
 #include <assert.h>
 #include <unistd.h>
+#include <time.h>
 #include "config.h"
 
 using namespace std;
 #define NIL (0)
+void check_timeout(int timeout);
 
 int main(int argc, char* argv[]) {
     // Open the display
@@ -61,7 +64,7 @@ int main(int argc, char* argv[]) {
     
     // Create the window
     Window w = XCreateWindow(dpy, XDefaultRootWindow(dpy), x_pos, y_pos, width, height, border_size, CopyFromParent, InputOutput, CopyFromParent, CWBackPixel | CWOverrideRedirect | CWBorderPixel, &attributes);
-    XSelectInput(dpy, w, StructureNotifyMask);
+    XSelectInput(dpy, w, StructureNotifyMask | ButtonPressMask);
     XMapWindow(dpy, w);
     
     // Set the font and text color
@@ -91,6 +94,18 @@ int main(int argc, char* argv[]) {
     // Draw the info to the notification
     XftDrawStringUtf8(draw, &fg_color, font, 3, 11, (const FcChar8 *)argv[1], strlen(argv[1]));
     XFlush(dpy);
-    sleep(timeout);
-    XClearWindow(dpy, w);
+
+    std::thread thread_obj(check_timeout, timeout);
+
+    while (1) {
+        XEvent e;
+		XNextEvent(dpy, &e);
+		if (e.type == ButtonPress) { exit(0); }
+    }
+}
+
+void check_timeout(int timeout) {
+    time_t start = time(NIL);
+    while (time(NIL) <= start + timeout) {}
+    exit(0);
 }
